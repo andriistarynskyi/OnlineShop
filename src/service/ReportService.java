@@ -28,7 +28,6 @@ public class ReportService {
         for (Customer customer : customerList) {
             if (startDate.isBefore(customer.getDateOfLastPurchase()) && endDate.isAfter(customer.getDateOfLastPurchase())) {
                 itemsList.addAll(customer.getLastPurchases());
-
             }
         }
         return itemsList;

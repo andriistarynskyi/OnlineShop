@@ -12,7 +12,7 @@ public class Customer {
     private String address;
     private Gender gender;
     private String phoneNumber;
-    private List<Item> lastPurchases= new ArrayList<>();
+    private List<Item> lastPurchases = new ArrayList<>();
     private LocalDate dateOfLastPurchase;
 
     public Customer() {
