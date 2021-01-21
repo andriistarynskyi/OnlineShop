@@ -25,8 +25,8 @@ public class ItemService {
             newItem.setProducer(tempArray[3]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss");
             newItem.setDateOfLastUpdate(LocalDate.parse(tempArray[4], formatter));
+            itemsList.add(newItem);
         }
-        itemsList.add(newItem);
         return itemsList;
     }
 }
