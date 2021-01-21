@@ -1,7 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,19 +11,20 @@ public class Customer {
     private String address;
     private Gender gender;
     private String phoneNumber;
-    private List<Item> lastPurchases = new ArrayList<>();
+    private List<Integer> productsCodes = new ArrayList<>();
     private LocalDate dateOfLastPurchase;
 
     public Customer() {
     }
 
-    public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber, List<Item> lastPurchases, LocalDate dateOfLastPurchase) {
+    public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber,
+                    List<Integer> productsCodes, LocalDate dateOfLastPurchase) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.lastPurchases = lastPurchases;
+        this.productsCodes = productsCodes;
         this.dateOfLastPurchase = dateOfLastPurchase;
     }
 
@@ -68,15 +68,15 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Item> getLastPurchases() {
-        return lastPurchases;
+    public List<Integer> getProductsCodes() {
+        return productsCodes;
     }
 
-    public void setLastPurchases(List<Item> lastPurchases) {
-        this.lastPurchases = lastPurchases;
+    public void setProductsCodes(List<Integer> productsCodes) {
+        this.productsCodes = productsCodes;
     }
 
-    public ChronoLocalDate getDateOfLastPurchase() {
+    public LocalDate getDateOfLastPurchase() {
         return dateOfLastPurchase;
     }
 
@@ -92,7 +92,7 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", gender=" + gender +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", lastPurchases=" + lastPurchases +
+                ", productsCodes=" + productsCodes +
                 ", dateOfLastPurchase=" + dateOfLastPurchase +
                 '}';
     }
@@ -102,11 +102,11 @@ public class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber()) && getLastPurchases().equals(customer.getLastPurchases()) && getDateOfLastPurchase().equals(customer.getDateOfLastPurchase());
+        return getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber()) && getProductsCodes().equals(customer.getProductsCodes()) && getDateOfLastPurchase().equals(customer.getDateOfLastPurchase());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber(), getLastPurchases(), getDateOfLastPurchase());
+        return Objects.hash(getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber(), getProductsCodes(), getDateOfLastPurchase());
     }
 }
