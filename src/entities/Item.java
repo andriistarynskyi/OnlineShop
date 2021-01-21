@@ -1,6 +1,8 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Item {
@@ -9,23 +11,26 @@ public class Item {
     private int code;
     private String producer;
     private LocalDate dateOfLastUpdate;
+    private List<Customer> customersPurchasedItemList = new ArrayList<>();
 
     public Item() {
     }
 
-    public Item(int id, String title, int code, String producer, LocalDate dateOfLastUpdate) {
+    public Item(int id, String title, int code, String producer, LocalDate dateOfLastUpdate,
+                List<Customer> customersPurchasedItemList) {
         this.id = id;
         this.title = title;
         this.code = code;
         this.producer = producer;
         this.dateOfLastUpdate = dateOfLastUpdate;
+        this.customersPurchasedItemList = customersPurchasedItemList;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -61,6 +66,14 @@ public class Item {
         this.dateOfLastUpdate = dateOfLastUpdate;
     }
 
+    public List<Customer> getCustomersPurchasedItemList() {
+        return customersPurchasedItemList;
+    }
+
+    public void setCustomersPurchasedItemList(List<Customer> customersPurchasedItemList) {
+        this.customersPurchasedItemList = customersPurchasedItemList;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -69,6 +82,7 @@ public class Item {
                 ", code=" + code +
                 ", producer='" + producer + '\'' +
                 ", dateOfLastUpdate=" + dateOfLastUpdate +
+                ", customersPurchasedItemList=" + customersPurchasedItemList +
                 '}';
     }
 
@@ -77,11 +91,11 @@ public class Item {
         if (this == o) return true;
         if (!(o instanceof Item)) return false;
         Item item = (Item) o;
-        return getId() == item.getId() && getCode() == item.getCode() && getTitle().equals(item.getTitle()) && getProducer().equals(item.getProducer()) && getDateOfLastUpdate().equals(item.getDateOfLastUpdate());
+        return getId() == item.getId() && getCode() == item.getCode() && getTitle().equals(item.getTitle()) && getProducer().equals(item.getProducer()) && getDateOfLastUpdate().equals(item.getDateOfLastUpdate()) && getCustomersPurchasedItemList().equals(item.getCustomersPurchasedItemList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getCode(), getProducer(), getDateOfLastUpdate());
+        return Objects.hash(getId(), getTitle(), getCode(), getProducer(), getDateOfLastUpdate(), getCustomersPurchasedItemList());
     }
 }
