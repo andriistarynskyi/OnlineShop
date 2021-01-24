@@ -1,32 +1,44 @@
 package service;
 
 import entities.Item;
+import utils.DbConnection;
+import utils.ReadDataFromFile;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ItemService {
 
-    ReadDataFromFileService readDataFromFileService = new ReadDataFromFileService();
-
-    public List<Item> addItemsToDb() {
+    public List<String> readItemsFromFile() {
         String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
-        List<Item> itemsList = new ArrayList<>();
-        List<String> dataFromFileList = readDataFromFileService.readDataFromFile(itemsFilePath);
-        Item newItem = new Item();
+        List<String> itemsDataList = ReadDataFromFile.readDataFromFile(itemsFilePath);
+        return itemsDataList;
+    }
 
-        for (String str : dataFromFileList) {
-            String[] tempArray = str.split(";");
-            newItem.setId(Integer.parseInt(tempArray[0]));
-            newItem.setTitle(tempArray[1]);
-            newItem.setCode(Integer.parseInt(tempArray[2]));
-            newItem.setProducer(tempArray[3]);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss");
-            newItem.setDateOfLastUpdate(LocalDate.parse(tempArray[4], formatter));
-            itemsList.add(newItem);
-        }
+    public List<Item> getItemsFromFile() {
+        List<String> itemsDataList = readItemsFromFile();
+        ItemValidation itemsValidation = new ItemValidation();
+        List<Item> itemsList = itemsValidation.validateItems(itemsDataList);
         return itemsList;
+    }
+
+    public void addItemsToDb(List<Item> itemsList) throws SQLException {
+        String cmdText = "INSERT INTO items(id, title, code, producer, dateOfLastUpdate) values(?, ?, ?, ?, ?)";
+        try (
+                Connection connection = DbConnection.connect();
+                PreparedStatement statement = connection.prepareStatement(cmdText);
+        ) {
+            for (Item item : itemsList) {
+                statement.setInt(1, item.getId());
+                statement.setString(2, item.getTitle());
+                statement.setInt(3, item.getCode());
+                statement.setString(4, item.getProducer());
+                statement.setDate(5, java.sql.Date.valueOf(item.getDateOfLastUpdate()));
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        }
     }
 }

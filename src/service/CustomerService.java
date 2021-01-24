@@ -2,6 +2,7 @@ package service;
 
 import entities.Customer;
 import entities.Gender;
+import utils.ReadDataFromFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,16 +11,13 @@ import java.util.List;
 
 public class CustomerService {
 
-    ReadDataFromFileService readDataFromFileService = new ReadDataFromFileService();
-
     public List<Customer> addCustomersToDb() {
         String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
         List<Customer> customersList = new ArrayList<>();
-        List<String> dataFromFileList = readDataFromFileService.readDataFromFile(customersFilePath);
-        Customer newCustomer = new Customer();
-        List<Integer> listOfItemsCodes = new ArrayList<>();
+        List<String> dataFromFileList = ReadDataFromFile.readDataFromFile(customersFilePath);
 
         for (String str : dataFromFileList) {
+            Customer newCustomer = new Customer();
             String[] tempArray = str.split(";");
             newCustomer.setName(tempArray[0]);
             DateTimeFormatter dobFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
@@ -51,7 +49,6 @@ public class CustomerService {
             newCustomer.setDateOfLastPurchase(LocalDate.parse(tempArray[6], orderDateFormatter));
 
             customersList.add(newCustomer);
-
         }
         return customersList;
     }
