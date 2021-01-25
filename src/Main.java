@@ -1,9 +1,9 @@
 import entities.Customer;
 import entities.Item;
-//import service.CustomerService;
+import entities.Order;
 import service.CustomerService;
 import service.ItemService;
-import service.OrderValidation;
+import service.OrderService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,8 +18,10 @@ public class Main {
         List<Customer> customersList = customerService.getCustomersFromFile();
 //        customerService.addCustomersToDb(customersList);
 
-        List<String> customersDataList = customerService.readCustomersDataFromFile();
-        OrderValidation orderValidation = new OrderValidation();
-        System.out.println(orderValidation.validateOrder(customersDataList));
+        OrderService orderService = new OrderService();
+        List<Order> ordersList = orderService.getOrdersFromFile(customersList, itemsList);
+        for (Order order : ordersList) {
+            System.out.println(order);
+        }
     }
 }

@@ -11,8 +11,9 @@ import java.util.List;
 
 public class ItemService {
 
+    public static String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
+
     public List<String> readItemsDataFromFile() {
-        String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
         List<String> itemsDataList = ReadDataFromFile.readDataFromFile(itemsFilePath);
         return itemsDataList;
     }

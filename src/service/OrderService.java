@@ -1,5 +1,10 @@
 package service;
 
+import entities.Customer;
+import entities.Item;
+import entities.Order;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderService {
@@ -10,7 +15,11 @@ public class OrderService {
         return ordersDataList;
     }
 
-    public void addOrderToDb() {
-
+    public List<Order> getOrdersFromFile(List<Customer> customerList, List<Item> itemsList) {
+        List<Order> ordersList = new ArrayList<>();
+        List<String> ordersDataFile = readOrdersFromFile();
+        OrderValidation orderValidation = new OrderValidation();
+        ordersList = orderValidation.validateOrder(ordersDataFile, customerList, itemsList);
+        return ordersList;
     }
 }

@@ -1,8 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,12 +8,12 @@ import java.util.Objects;
 public class Order {
     Customer customer;
     List<Item> orderedItems = new ArrayList<>();
-    LocalDateTime orderPlacementDate;
+    LocalDate orderPlacementDate;
 
     public Order() {
     }
 
-    public Order(Customer customer, List<Item> orderedItems, LocalDateTime orderPlacementDate) {
+    public Order(Customer customer, List<Item> orderedItems, LocalDate orderPlacementDate) {
         this.customer = customer;
         this.orderedItems = orderedItems;
         this.orderPlacementDate = orderPlacementDate;
@@ -37,11 +35,11 @@ public class Order {
         this.orderedItems = orderedItems;
     }
 
-    public LocalDateTime getOrderPlacementDate() {
+    public LocalDate getOrderPlacementDate() {
         return orderPlacementDate;
     }
 
-    public void setOrderPlacementDate(LocalDateTime orderPlacementDate, DateTimeFormatter formatter) {
+    public void setOrderPlacementDate(LocalDate orderPlacementDate) {
         this.orderPlacementDate = orderPlacementDate;
     }
 

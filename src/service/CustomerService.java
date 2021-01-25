@@ -7,16 +7,13 @@ import utils.ReadDataFromFile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
 
     public List<String> readCustomersDataFromFile() {
         String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
-        List<String> customersDataList = new ArrayList<>();
-        customersDataList = ReadDataFromFile.readDataFromFile(customersFilePath);
-
+        List<String> customersDataList = ReadDataFromFile.readDataFromFile(customersFilePath);
         return customersDataList;
     }
 
@@ -24,7 +21,6 @@ public class CustomerService {
         List<String> customersDataFromFile = readCustomersDataFromFile();
         CustomerValidation customerValidation = new CustomerValidation();
         List<Customer> customersList = customerValidation.validateCustomer(customersDataFromFile);
-
         return customersList;
     }
 

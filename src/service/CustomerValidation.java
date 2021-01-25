@@ -31,6 +31,7 @@ public class CustomerValidation {
             } else {
                 newCustomer.setPhoneNumber(null);
             }
+            customersList.add(newCustomer);
         }
         return customersList;
     }
