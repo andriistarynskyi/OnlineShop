@@ -1,55 +1,48 @@
 package service;
 
 import entities.Customer;
-import entities.Gender;
+import utils.DbConnection;
 import utils.ReadDataFromFile;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
 
-    public List<Customer> addCustomersToDb() {
+    public List<String> readCustomersDataFromFile() {
         String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
-        List<Customer> customersList = new ArrayList<>();
-        List<String> dataFromFileList = ReadDataFromFile.readDataFromFile(customersFilePath);
+        List<String> customersDataList = new ArrayList<>();
+        customersDataList = ReadDataFromFile.readDataFromFile(customersFilePath);
 
-        for (String str : dataFromFileList) {
-            Customer newCustomer = new Customer();
-            String[] tempArray = str.split(";");
-            newCustomer.setName(tempArray[0]);
-            DateTimeFormatter dobFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-            newCustomer.setDateOfBirth(LocalDate.parse(tempArray[1], dobFormatter));
-            newCustomer.setAddress(tempArray[2]);
-            if (tempArray[3].equals("female")) {
-                newCustomer.setGender(Gender.FEMALE);
-            } else if (tempArray[3].equals("male")) {
-                newCustomer.setGender((Gender.MALE));
-            }
+        return customersDataList;
+    }
 
-//            check if phone number exist
-            if (!tempArray[4].equals("")) {
-                newCustomer.setPhoneNumber(tempArray[4]);
-            } else {
-                newCustomer.setPhoneNumber(null);
-            }
-            String productCodes = tempArray[5];
-            String lastOrderProductsIds = productCodes.replaceAll("[^a-zA-Z0-9]", "");
-            String[] arrayIds = lastOrderProductsIds.split(" ");
-            List<Integer> listOfCodes = new ArrayList<>();
-            for (int i = 0; i < arrayIds.length; i++) {
-                Integer.parseInt(arrayIds[i]);
-                listOfCodes.add(i);
-            }
-            newCustomer.setProductsCodes(listOfCodes);
+    public List<Customer> getCustomersFromFile() {
+        List<String> customersDataFromFile = readCustomersDataFromFile();
+        CustomerValidation customerValidation = new CustomerValidation();
+        List<Customer> customersList = customerValidation.validateCustomer(customersDataFromFile);
 
-            DateTimeFormatter orderDateFormatter = DateTimeFormatter.ofPattern("M/dd/yyyy");
-            newCustomer.setDateOfLastPurchase(LocalDate.parse(tempArray[6], orderDateFormatter));
-
-            customersList.add(newCustomer);
-        }
         return customersList;
+    }
+
+    public void addCustomersToDb(List<Customer> customerList) throws SQLException {
+        String cmdText = "INSERT INTO customer(name, dateOfBirth, gender, phoneNumber) " +
+                "values(?, ?, ?, ?)";
+        try (
+                Connection connection = DbConnection.connect();
+                PreparedStatement statement = connection.prepareStatement(cmdText);
+        ) {
+            for (Customer customer : customerList) {
+                statement.setString(1, customer.getName());
+                statement.setDate(2, java.sql.Date.valueOf(customer.getDateOfBirth()));
+                statement.setString(3, customer.getGender().toString());
+                statement.setString(4, customer.getPhoneNumber());
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        }
     }
 }

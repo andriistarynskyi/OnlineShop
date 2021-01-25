@@ -1,8 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Customer {
@@ -11,21 +9,16 @@ public class Customer {
     private String address;
     private Gender gender;
     private String phoneNumber;
-    private List<Integer> productsCodes = new ArrayList<>();
-    private LocalDate dateOfLastPurchase;
 
     public Customer() {
     }
 
-    public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber,
-                    List<Integer> productsCodes, LocalDate dateOfLastPurchase) {
+    public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.productsCodes = productsCodes;
-        this.dateOfLastPurchase = dateOfLastPurchase;
     }
 
     public String getName() {
@@ -68,22 +61,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Integer> getProductsCodes() {
-        return productsCodes;
-    }
-
-    public void setProductsCodes(List<Integer> productsCodes) {
-        this.productsCodes = productsCodes;
-    }
-
-    public LocalDate getDateOfLastPurchase() {
-        return dateOfLastPurchase;
-    }
-
-    public void setDateOfLastPurchase(LocalDate dateOfLastPurchase) {
-        this.dateOfLastPurchase = dateOfLastPurchase;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
@@ -92,8 +69,6 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", gender=" + gender +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", productsCodes=" + productsCodes +
-                ", dateOfLastPurchase=" + dateOfLastPurchase +
                 '}';
     }
 
@@ -102,11 +77,11 @@ public class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber()) && getProductsCodes().equals(customer.getProductsCodes()) && getDateOfLastPurchase().equals(customer.getDateOfLastPurchase());
+        return getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber(), getProductsCodes(), getDateOfLastPurchase());
+        return Objects.hash(getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber());
     }
 }
