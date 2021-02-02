@@ -4,6 +4,7 @@ import entities.Customer;
 import utils.DbConnection;
 import utils.ReadDataFromFile;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,11 +25,11 @@ public class CustomerService {
         return customersList;
     }
 
-    public void addCustomersToDb(List<Customer> customerList) throws SQLException {
+    public void addCustomersToDb(List<Customer> customerList) throws SQLException, IOException {
         String cmdText = "INSERT INTO customer(name, dateOfBirth, gender, phoneNumber) " +
                 "values(?, ?, ?, ?)";
         try (
-                Connection connection = DbConnection.connect();
+                Connection connection = DbConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(cmdText);
         ) {
             for (Customer customer : customerList) {

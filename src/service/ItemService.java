@@ -4,6 +4,7 @@ import entities.Item;
 import utils.DbConnection;
 import utils.ReadDataFromFile;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,10 +26,10 @@ public class ItemService {
         return itemsList;
     }
 
-    public void addItemsToDb(List<Item> itemsList) throws SQLException {
+    public void addItemsToDb(List<Item> itemsList) throws SQLException, IOException, ClassNotFoundException {
         String cmdText = "INSERT INTO item(title, code, producer, dateOfLastUpdate) values(?, ?, ?, ?)";
         try (
-                Connection connection = DbConnection.connect();
+                Connection connection = DbConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(cmdText);
         ) {
             for (Item item : itemsList) {
