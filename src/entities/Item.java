@@ -13,8 +13,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(int id, String title, int code, String producer, LocalDate dateOfLastUpdate) {
-        this.id = id;
+    public Item(String title, int code, String producer, LocalDate dateOfLastUpdate) {
         this.title = title;
         this.code = code;
         this.producer = producer;
@@ -25,7 +24,7 @@ public class Item {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

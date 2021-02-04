@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Customer {
+    private static int count = 1;
+    private int id = 1;
     private String name;
     private LocalDate dateOfBirth;
     private String address;
@@ -11,14 +13,24 @@ public class Customer {
     private String phoneNumber;
 
     public Customer() {
+        id = count++;
     }
 
     public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber) {
+        id = count++;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -64,7 +76,8 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", address='" + address + '\'' +
                 ", gender=" + gender +
@@ -77,11 +90,11 @@ public class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber());
+        return getId() == customer.getId() && getName().equals(customer.getName()) && getDateOfBirth().equals(customer.getDateOfBirth()) && getAddress().equals(customer.getAddress()) && getGender() == customer.getGender() && getPhoneNumber().equals(customer.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber());
+        return Objects.hash(getId(), getName(), getDateOfBirth(), getAddress(), getGender(), getPhoneNumber());
     }
 }

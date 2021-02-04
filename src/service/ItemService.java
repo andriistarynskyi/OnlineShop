@@ -1,45 +1,36 @@
 package service;
 
 import entities.Item;
-import utils.DbConnection;
 import utils.ReadDataFromFile;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemService {
 
-    public static String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
-
-    public List<String> readItemsDataFromFile() {
+    public List<Item> parseItemsFromFile() {
+        String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
+        List<Item> itemsList = new ArrayList<>();
         List<String> itemsDataList = ReadDataFromFile.readDataFromFile(itemsFilePath);
-        return itemsDataList;
-    }
 
-    public List<Item> getItemsFromFile() {
-        List<String> itemsDataList = readItemsDataFromFile();
-        ItemValidation itemsValidation = new ItemValidation();
-        List<Item> itemsList = itemsValidation.validateItems(itemsDataList);
+        for (String str : itemsDataList) {
+            String[] tempArray = str.split(";");
+            String title = tempArray[1];
+            int code = Integer.parseInt(tempArray[2]);
+            String producer = tempArray[3];
+            LocalDate dateOfLastUpdate = getDateOfLastUpdate(tempArray[4]);
+
+            itemsList.add(new Item(title, code, producer, dateOfLastUpdate));
+        }
         return itemsList;
     }
 
-    public void addItemsToDb(List<Item> itemsList) throws SQLException, IOException, ClassNotFoundException {
-        String cmdText = "INSERT INTO item(title, code, producer, dateOfLastUpdate) values(?, ?, ?, ?)";
-        try (
-                Connection connection = DbConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(cmdText);
-        ) {
-            for (Item item : itemsList) {
-                statement.setString(1, item.getTitle());
-                statement.setInt(2, item.getCode());
-                statement.setString(3, item.getProducer());
-                statement.setDate(4, java.sql.Date.valueOf(item.getDateOfLastUpdate()));
-                statement.addBatch();
-            }
-            statement.executeBatch();
-        }
+    public LocalDate getDateOfLastUpdate(String str) {
+        LocalDate dateOfLastUpdate = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss");
+        dateOfLastUpdate = LocalDate.parse(str, formatter);
+        return dateOfLastUpdate;
     }
 }
