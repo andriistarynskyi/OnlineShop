@@ -1,5 +1,13 @@
 package service;
 
+import utils.DbConnection;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class ReportService {
 
 //    public Integer getCustomerIdFromDb(String customerName) throws IOException, SQLException {
