@@ -1,7 +1,7 @@
 package service;
 
-import entities.Order;
-import utils.DbConnection;
+import entity.Order;
+import DbUtils.DbConnection;
 import utils.ReadDataFromFile;
 
 import java.io.IOException;

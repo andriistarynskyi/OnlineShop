@@ -1,11 +1,10 @@
-package entities;
+package entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Customer {
-    private static int count = 1;
-    private int id = 1;
+    private int id;
     private String name;
     private LocalDate dateOfBirth;
     private String address;
@@ -13,11 +12,9 @@ public class Customer {
     private String phoneNumber;
 
     public Customer() {
-        id = count++;
     }
 
     public Customer(String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber) {
-        id = count++;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;

@@ -1,9 +1,9 @@
 package service;
 
-import entities.Customer;
-import entities.Item;
-import entities.Order;
-import utils.DbConnection;
+import entity.Customer;
+import entity.Item;
+import entity.Order;
+import DbUtils.DbConnection;
 
 import java.io.IOException;
 import java.sql.Connection;

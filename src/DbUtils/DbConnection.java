@@ -1,4 +1,4 @@
-package utils;
+package DbUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class DbConnection {
         Connection conn;
         Properties props = new Properties();
 
-        try (BufferedReader in = Files.newBufferedReader(Path.of("C:\\Users\\astar\\IdeaProjects\\OnlineShop\\app.properties"),
+        try (BufferedReader in = Files.newBufferedReader(Path.of("app.properties"),
                 Charset.forName("UTF-8"))) {
             props.load(in);
         }

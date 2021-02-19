@@ -12,7 +12,7 @@ DateOfLastPurchase has a format of mm/dd/yyyy.
 
 Tasks:
 Read files and created a collection of Java objects based on that data
-Persist all the data in DB (DB should be created based on entities in csv files)
+Persist all the data in DB (DB should be created based on entity in csv files)
 
 Create reports from Java:
 what goods are the most popular among women

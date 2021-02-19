@@ -1,7 +1,7 @@
 package service;
 
-import entities.Customer;
-import entities.Gender;
+import entity.Customer;
+import entity.Gender;
 import utils.ReadDataFromFile;
 
 import java.time.LocalDate;
