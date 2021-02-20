@@ -22,6 +22,15 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
+    public Customer(int id, String name, LocalDate dateOfBirth, String address, Gender gender, String phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getId() {
         return id;
     }

@@ -20,6 +20,14 @@ public class Item {
         this.dateOfLastUpdate = dateOfLastUpdate;
     }
 
+    public Item(int id, String title, int code, String producer, LocalDate dateOfLastUpdate) {
+        this.id = id;
+        this.title = title;
+        this.code = code;
+        this.producer = producer;
+        this.dateOfLastUpdate = dateOfLastUpdate;
+    }
+
     public int getId() {
         return id;
     }

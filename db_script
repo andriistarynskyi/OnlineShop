@@ -1,7 +1,8 @@
 CREATE TABLE customers
 (
     customer_id           INT         NOT NULL AUTO_INCREMENT,
-    customer_name         VARCHAR(50) NOT NULL,
+    customer_name         VARCHAR(50) NOT NULL UNIQUE,
+    customer_address VARCHAR(50),
     customer_dob          DATE        NOT NULL,
     customer_gender       VARCHAR(10) NOT NULL,
     customer_phone_number VARCHAR(20),
@@ -10,7 +11,7 @@ CREATE TABLE customers
 CREATE TABLE items
 (
     item_id                  INT         NOT NULL AUTO_INCREMENT,
-    item_title               VARCHAR(30) NOT NULL,
+    item_title               VARCHAR(30) NOT NULL UNIQUE,
     item_code                INT         NOT NULL,
     item_producer            VARCHAR(30),
     item_date_of_last_update DATE        NOT NULL,

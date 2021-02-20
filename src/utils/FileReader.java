@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadDataFromFile {
-    public static List<String> readDataFromFile(String path) {
+public class FileReader {
+    public static List<String> read(String path) {
         List<String> dataListFromFile = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
             int iteration = 0;

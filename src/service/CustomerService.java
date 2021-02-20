@@ -2,28 +2,31 @@ package service;
 
 import entity.Customer;
 import entity.Gender;
-import utils.ReadDataFromFile;
+import repository.CustomerRepository;
+import utils.DateParser;
+import utils.FileReader;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
 
+    CustomerRepository customerRepository = new CustomerRepository();
+
     public List<Customer> parseCustomersFromFile() {
         String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
         List<Customer> customersList = new ArrayList<>();
-        List<String> customersDataList = ReadDataFromFile.readDataFromFile(customersFilePath);
+        List<String> customersDataList = FileReader.read(customersFilePath);
 
         for (String str : customersDataList) {
             String[] tempArray = str.split(";");
 
             String customerName = tempArray[0];
-            LocalDate dateOfBirth = getCustomerDoB(tempArray[1]);
+            LocalDate dateOfBirth = DateParser.parse(tempArray[1], "d MMMM yyyy");
             String address = tempArray[2];
-            Gender gender = getCustomerGender(tempArray[3]);
-            String phoneNumber = getCustomerPhoneNumber(tempArray[4]);
+            Gender gender = getGender(tempArray[3]);
+            String phoneNumber = getPhoneNumber(tempArray[4]);
 
             customersList.add(new Customer(customerName, dateOfBirth, address, gender, phoneNumber));
 
@@ -31,7 +34,7 @@ public class CustomerService {
         return customersList;
     }
 
-    public Gender getCustomerGender(String str) {
+    private Gender getGender(String str) {
         Gender gender = null;
         if (str.equals("Male") || (str.equals("male"))) {
             gender = Gender.MALE;
@@ -41,14 +44,7 @@ public class CustomerService {
         return gender;
     }
 
-    public LocalDate getCustomerDoB(String str) {
-        LocalDate dob = null;
-        DateTimeFormatter dobFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-        dob = LocalDate.parse(str, dobFormatter);
-        return dob;
-    }
-
-    public String getCustomerPhoneNumber(String str) {
+    public String getPhoneNumber(String str) {
         String phoneNumber = "";
         if (!str.equals("")) {
             phoneNumber = str;
@@ -56,5 +52,18 @@ public class CustomerService {
             phoneNumber = "";
         }
         return phoneNumber;
+    }
+
+    public boolean save(Customer customer) {
+        customerRepository.save(customer);
+        return true;
+    }
+
+    public Customer getById(int id) {
+        return customerRepository.getById(id);
+    }
+
+    public Customer getByName(String name) {
+        return customerRepository.getByName(name);
     }
 }
