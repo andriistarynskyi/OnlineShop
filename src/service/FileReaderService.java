@@ -9,7 +9,7 @@ public class FileReaderService {
     ItemService itemService = new ItemService();
     OrderService orderService = new OrderService();
 
-    public boolean readCustomers() {
+    public boolean saveCustomers() {
         for (Customer c : customerService.parseCustomersFromFile()) {
             customerService.save(c);
         }
@@ -17,7 +17,7 @@ public class FileReaderService {
         return true;
     }
 
-    public boolean readItems() {
+    public boolean saveItems() {
         for (Item i : itemService.parseItemsFromFile()) {
             itemService.save(i);
         }
@@ -25,7 +25,7 @@ public class FileReaderService {
         return true;
     }
 
-    public boolean readOrders() {
+    public boolean saveOrders() {
         for (Order o : orderService.parse()) {
             orderService.save(o);
         }

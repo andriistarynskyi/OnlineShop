@@ -68,4 +68,8 @@ public class OrderService {
         orderRepository.save(o);
         return true;
     }
+
+    public List<Order> getAll() {
+        return orderRepository.getAll();
+    }
 }

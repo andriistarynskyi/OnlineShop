@@ -25,6 +25,12 @@ public class Order {
         this.orderPlacementDate = orderPlacementDate;
     }
 
+    public Order(int id, Customer customer, LocalDate orderPlacementDate) {
+        this.id = id;
+        this.customer = customer;
+        this.orderPlacementDate = orderPlacementDate;
+    }
+
     public int getId() {
         return id;
     }

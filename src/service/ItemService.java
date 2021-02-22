@@ -39,7 +39,4 @@ public class ItemService {
         return itemRepository.getById(id);
     }
 
-    public Item getByCode(int itemCode) {
-        return itemRepository.getByCode(itemCode);
-    }
 }
