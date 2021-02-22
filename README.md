@@ -29,8 +29,6 @@ candidateToRemove.csv - the least popular good.
 
 All the data should be in csv format with ; used as a delimeter.
 
-![db_diagram](https://github.com/andriistarynskyi/OnlineShop/blob/master/online_store_db_diagram.png )
-
 <p align="center">
   <img width=auto height=auto src="https://github.com/andriistarynskyi/OnlineShop/blob/master/online_store_db_diagram.png">
 </p>
