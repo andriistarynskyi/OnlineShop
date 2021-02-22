@@ -1,11 +1,20 @@
+import entity.Item;
+import entity.Order;
 import service.FileReaderService;
+import service.OrderService;
+import service.report.OrderReportService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class ExecuteMethod {
 
     FileReaderService fileReader = new FileReaderService();
+    OrderReportService orderReportService = new OrderReportService();
+    OrderService orderService = new OrderService();
 
     public boolean createReport() {
-
+        List<Order> orders = orderService.getAll();
 //        Read data from files and persist all the data into 4 tables
 //        (customers, items, orders, orderedItems?)
 
@@ -13,20 +22,30 @@ public class ExecuteMethod {
         fileReader.saveItems();
         fileReader.saveOrders();
 
-//        Create reports from Java:
 //        what goods are the most popular among women
-
-
+        for (Item i : orderReportService.getMostPopularItemsPurchasedByWomen(orders)) {
+            System.out.println(i);
+        }
+        System.out.println("-----------------------");
 
 //        the most popular goods during a particular weekend (passed in as a param)
-//        Alter the DB using plain SQL:
-//        create new columns: PrimaryItem, CandidateToRemove
-//        fetch three the most and least popular goods and mark them correspondingly in the table
-//        Write all the marked goods (see the bullet point above) in two different files:
-//        primaryItems.csv with the most popular goods;
-//        candidateToRemove.csv - the least popular good.
-//                All the data should be in csv format with ; used as a delimeter
+        for (Item i : orderReportService.getPopularItemsDuringTimeFrame(orders,
+                LocalDate.of(2017, 7, 3),
+                LocalDate.of(2018, 6, 5))) {
+            System.out.println(i);
+        }
+        System.out.println("-----------------------");
 
+//        get 3 most popular items in the store
+        for (Item i : orderReportService.getBestSellers(orders)) {
+            System.out.println(i);
+        }
+        System.out.println("-----------------------");
+
+//        get 3 least popular items in the store
+        for (Item i : orderReportService.getItemsWithPoorSellingHistory(orders)) {
+            System.out.println(i);
+        }
         return true;
     }
 }
