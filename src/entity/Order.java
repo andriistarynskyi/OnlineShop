@@ -1,25 +1,26 @@
 package entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
+    private static final AtomicInteger count = new AtomicInteger(0);
     private int id;
     private Customer customer;
     private LocalDate orderPlacementDate;
-    private List<Item> orderedItems;
+    private List<Item> orderedItems = new ArrayList<>();
+
+    private boolean isFilled;
 
     public Order() {
     }
 
-    public Order(Customer customer, LocalDate orderPlacementDate, List<Item> orderedItems) {
-        this.customer = customer;
-        this.orderPlacementDate = orderPlacementDate;
-        this.orderedItems = orderedItems;
-    }
-
     public Order(Customer customer, LocalDate orderPlacementDate) {
+        isFilled = false;
+        id = count.incrementAndGet();
         this.customer = customer;
         this.orderPlacementDate = orderPlacementDate;
     }

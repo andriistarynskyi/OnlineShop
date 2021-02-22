@@ -23,11 +23,7 @@ public class ItemRepository {
             statement.setDate(4, java.sql.Date.valueOf(item.getDateOfLastUpdate()));
             statement.addBatch();
             statement.executeBatch();
-        } catch (
-                SQLException throwable) {
-            throwable.printStackTrace();
-        } catch (
-                IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -50,9 +46,29 @@ public class ItemRepository {
                 item = new Item(id, name, code, producer, lastUpdate);
             }
 
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    public Item getByCode(int itemCode) {
+        Item item = null;
+        String sql = "SELECT * FROM items WHERE item_code=" + itemCode;
+        try (
+                Connection conn = DbConnection.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql);
+        ) {
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("item_id");
+                String name = rs.getString("item_title");
+                int code = rs.getInt("item_code");
+                String producer = rs.getString("item_producer");
+                LocalDate lastUpdate = rs.getDate("item_date_of_last_update").toLocalDate();
+                item = new Item(id, name, code, producer, lastUpdate);
+            }
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return item;

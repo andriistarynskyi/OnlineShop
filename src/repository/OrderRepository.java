@@ -10,45 +10,38 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class OrderRepository {
-
-    public void save(Order order) {
-        String sqlQuery = "INSERT INTO orders(customer_id, order_placement_date)" + "values(?, ?)";
+    public void save(Order o) {
+        String sql = "INSERT INTO orders(order_id, customer_id, order_placement_date) values(?, ?, ?)";
         try (
                 Connection connection = DbConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sqlQuery);
+                PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            statement.setInt(1, order.getCustomer().getId());
-            statement.setDate(2, java.sql.Date.valueOf(order.getOrderPlacementDate()));
-            if (!order.getOrderedItems().equals(null)) {
-                saveOrderedItemCodes(order);
-            }
-            statement.addBatch();
-            statement.executeBatch();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        } catch (IOException e) {
+            statement.setInt(1, o.getId());
+            statement.setInt(2, o.getCustomer().getId());
+            statement.setDate(3, java.sql.Date.valueOf(o.getOrderPlacementDate()));
+            statement.executeUpdate();
+            saveOrderedItems(o);
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void saveOrderedItemCodes(Order order) {
-        String sqlQuery = "INSERT INTO ordered_items(order_id, item_code)" + "values(?, ?)";
+    public void saveOrderedItems(Order o) {
+        String sql = "INSERT INTO ordered_items(order_id, item_id) VALUES(?, ?)";
         try (
-                Connection connection = DbConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement((sqlQuery));
+                Connection conn = DbConnection.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql);
         ) {
-            statement.setInt(1, order.getId());
-            for (Item i : order.getOrderedItems()) {
-                statement.setInt(2, i.getCode());
+            statement.setInt(1, o.getId());
+            for (Item i : o.getOrderedItems()) {
+                statement.setInt(2, i.getId());
                 statement.addBatch();
-
             }
             statement.executeBatch();
-        } catch (
-                SQLException throwable) {
-            throwable.printStackTrace();
-        } catch (
-                IOException e) {
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

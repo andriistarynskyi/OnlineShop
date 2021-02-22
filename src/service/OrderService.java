@@ -29,6 +29,7 @@ public class OrderService {
 
             List<Item> items = getPurchasedItems(tempArray[5]);
             order.setOrderedItems(items);
+
             ordersList.add(order);
         }
         return ordersList;
@@ -63,8 +64,8 @@ public class OrderService {
         return parseItems(getItemCodes(str));
     }
 
-    public boolean save(Order order) {
-        orderRepository.save(order);
+    public boolean save(Order o) {
+        orderRepository.save(o);
         return true;
     }
 }

@@ -27,9 +27,7 @@ public class CustomerRepository {
             statement.setString(5, customer.getPhoneNumber());
             statement.addBatch();
             statement.executeBatch();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
