@@ -55,7 +55,6 @@ public class OrderRepository {
 
     public List<Order> getAll() {
         List<Order> orders = new ArrayList<>();
-        List<Item> orderedItems = new ArrayList<>();
 
         String sql = "SELECT * FROM orders";
 
