@@ -9,6 +9,8 @@ public class Item {
     private int code;
     private String producer;
     private LocalDate dateOfLastUpdate;
+    private boolean primaryItem;
+    private boolean candidateToRemove;
 
     public Item() {
     }
@@ -26,6 +28,22 @@ public class Item {
         this.code = code;
         this.producer = producer;
         this.dateOfLastUpdate = dateOfLastUpdate;
+    }
+
+    public boolean isPrimaryItem() {
+        return primaryItem;
+    }
+
+    public void setPrimaryItem(boolean primaryItem) {
+        this.primaryItem = primaryItem;
+    }
+
+    public boolean isCandidateToRemove() {
+        return candidateToRemove;
+    }
+
+    public void setCandidateToRemove(boolean candidateToRemove) {
+        this.candidateToRemove = candidateToRemove;
     }
 
     public int getId() {

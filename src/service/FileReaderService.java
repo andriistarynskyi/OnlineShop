@@ -15,7 +15,6 @@ public class FileReaderService {
         return true;
     }
 
-
     public boolean saveCustomers() {
         customerService.parseCustomersFromFile().forEach(c -> customerService.save(c));
         return true;

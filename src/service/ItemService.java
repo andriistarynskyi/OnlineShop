@@ -39,4 +39,21 @@ public class ItemService {
         return itemRepository.getById(id);
     }
 
+    public boolean updatePrimaryItem(Item item) {
+        itemRepository.updatePrimaryItem(item);
+        return true;
+    }
+
+    public boolean updadeCandidateToRemove(Item item) {
+        itemRepository.updateCandidateToRemove(item);
+        return true;
+    }
+
+    public List<Item> getBestSellers() {
+        return itemRepository.getBestSellers();
+    }
+
+    public List<Item> getCandidatesToRemove() {
+        return itemRepository.getCandidatesToRemove();
+    }
 }

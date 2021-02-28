@@ -3,6 +3,7 @@ package service.report;
 import entity.Gender;
 import entity.Item;
 import entity.Order;
+import service.ItemService;
 import service.OrderService;
 import utils.ItemSorter;
 
@@ -10,8 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderReportService {
+public class ItemReportService {
     OrderService orderService = new OrderService();
+    ItemService itemService = new ItemService();
 
     public Item getMostPopularItemAmongWomen() {
         List<Item> items = getItemsPurchasedByWomen(orderService.getAll());
@@ -26,7 +28,9 @@ public class OrderReportService {
     //    get top three best selling items
     public List<Item> getBestSellers() {
         List<Item> items = orderService.getAllOrderedItems();
-        return ItemSorter.getItemsSortedByNumberOfSales(items).subList(0, 3);
+        List<Item> bestSellingItems = ItemSorter.getItemsSortedByNumberOfSales(items).subList(0, 3);
+        bestSellingItems.forEach(i -> itemService.updatePrimaryItem(i));
+        return bestSellingItems;
     }
 
     //    get candidates to remove (items with no sales or with poor sales performance).
@@ -34,6 +38,7 @@ public class OrderReportService {
         List<Item> items = orderService.getAllOrderedItems();
         List<Item> sortedBySalesItems = ItemSorter.getItemsSortedByNumberOfSales(items);
         List<Item> itemsToRemove = sortedBySalesItems.subList(sortedBySalesItems.size() - 3, sortedBySalesItems.size());
+        itemsToRemove.forEach(i -> itemService.updadeCandidateToRemove(i));
         return itemsToRemove;
     }
 
@@ -59,5 +64,15 @@ public class OrderReportService {
             }
         }
         return ItemSorter.getItemsSortedByNumberOfSales(items).subList(0, 3);
+    }
+
+    public boolean saveBestSellersToFile() {
+        List<Item> items = itemService.getBestSellers();
+        return true;
+    }
+
+    public boolean saveCandidatesToRemoveToFile() {
+        List<Item> items = itemService.getCandidatesToRemove();
+        return true;
     }
 }

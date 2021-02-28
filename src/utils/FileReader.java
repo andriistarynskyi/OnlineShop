@@ -6,21 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileReader {
     public static List<String> read(String path) {
         List<String> dataListFromFile = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
-            int iteration = 0;
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (iteration == 0) {
-                    iteration++;
-                    continue;
-                } else {
-                    dataListFromFile.add(line);
-                }
-            }
+            dataListFromFile = reader.lines().skip(1).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
