@@ -1,49 +1,43 @@
-import entity.Order;
 import service.FileReaderService;
-import service.OrderService;
 import service.report.OrderReportService;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class ExecuteMethod {
 
     FileReaderService fileReader = new FileReaderService();
     OrderReportService orderReportService = new OrderReportService();
-    OrderService orderService = new OrderService();
 
     public boolean createReport() {
-        List<Order> orders = orderService.getAll();
 //        Read data from files and persist all the data into 4 tables
 //        (customers, items, orders, orderedItems?)
+        fileReader.saveDataFromFiles();
 
-        fileReader.saveCustomers();
-        fileReader.saveItems();
-        fileReader.saveOrders();
+        System.out.println("-----------------------");
 
-//        what goods are the most popular among women
-//        for (Item i : orderReportService.getMostPopularItemsPurchasedByWomen(orders)) {
-//            System.out.println(i);
-//        }
-//        System.out.println("-----------------------");
+//        what product is the most popular among women
+        System.out.println("The most popular item purchased by women is " +
+                orderReportService.getMostPopularItemAmongWomen() + ".");
 
-//        the most popular goods during a particular weekend (passed in as a param)
-//        for (Item i : orderReportService.getPopularItemsDuringTimeFrame(orders,
-//                LocalDate.of(2017, 7, 3),
-//                LocalDate.of(2018, 6, 5))) {
-//            System.out.println(i);
-//        }
-//        System.out.println("-----------------------");
-
-//        get 3 most popular items in the store
-//        for (Item i : orderReportService.getBestSellers(orders)) {
-//            System.out.println(i);
-//        }
-//        System.out.println("-----------------------");
+        System.out.println("-----------------------");
 
 //        get 3 least popular items in the store
-//        for (Item i : orderReportService.getItemsWithPoorSellingHistory(orders)) {
-//            System.out.println(i);
-//        }
+        System.out.println("Best sellers in the store are:");
+        orderReportService.getBestSellers().forEach(i -> System.out.println(i));
+
+        System.out.println("-----------------------");
+
+        System.out.println("Candidates to remove from the store are:");
+        orderReportService.getCandidatesToRemove().forEach(i -> System.out.println(i));
+
+        System.out.println("-----------------------");
+
+        System.out.println("Top three best selling items during certain period of time are:");
+        orderReportService.getItemsPurchasedWithinTimeFrame(
+                LocalDate.of(2016, 7, 10),
+                LocalDate.of(2018, 8, 8))
+                .forEach(i -> System.out.println(i));
+
         return true;
     }
 }

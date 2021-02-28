@@ -11,7 +11,6 @@ public class ItemSorter {
         Map<Integer, Item> itemsSalesCount = getCountOfOccurrences(items);
         Map<Integer, Item> sortedMapByKey = getSortedMap(itemsSalesCount);
         List<Item> sortedItems = getSortedItemsList(sortedMapByKey);
-
         return sortedItems;
     }
 

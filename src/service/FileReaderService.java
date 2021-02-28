@@ -1,35 +1,33 @@
 package service;
 
-import entity.Customer;
-import entity.Item;
-import entity.Order;
-
 public class FileReaderService {
     CustomerService customerService = new CustomerService();
     ItemService itemService = new ItemService();
     OrderService orderService = new OrderService();
 
+    public boolean saveDataFromFiles() {
+        saveCustomers();
+        System.out.println("Customers were added to DB.");
+        saveItems();
+        System.out.println("Items were added to DB.");
+        saveOrders();
+        System.out.println("Orders were added to DB.");
+        return true;
+    }
+
+
     public boolean saveCustomers() {
-        for (Customer c : customerService.parseCustomersFromFile()) {
-            customerService.save(c);
-        }
-        System.out.println("Customers were updated");
+        customerService.parseCustomersFromFile().forEach(c -> customerService.save(c));
         return true;
     }
 
     public boolean saveItems() {
-        for (Item i : itemService.parseItemsFromFile()) {
-            itemService.save(i);
-        }
-        System.out.println("Items were updated");
+        itemService.parseItemsFromFile().forEach(i -> itemService.save(i));
         return true;
     }
 
     public boolean saveOrders() {
-        for (Order o : orderService.parse()) {
-            orderService.save(o);
-        }
-        System.out.println("Orders were updated");
+        orderService.parse().forEach(o -> orderService.save(o));
         return true;
     }
 }

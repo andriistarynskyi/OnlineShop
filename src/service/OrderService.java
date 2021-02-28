@@ -4,6 +4,7 @@ import entity.Customer;
 import entity.Item;
 import entity.Order;
 import repository.OrderRepository;
+import repository.OrderedItemsRepository;
 import utils.DateParser;
 import utils.FileReader;
 
@@ -15,6 +16,7 @@ public class OrderService {
 
     CustomerService customerService = new CustomerService();
     OrderRepository orderRepository = new OrderRepository();
+    OrderedItemsRepository orderedItemsRepository = new OrderedItemsRepository();
     ItemService itemService = new ItemService();
 
     public List<Order> parse() {
@@ -71,5 +73,9 @@ public class OrderService {
 
     public List<Order> getAll() {
         return orderRepository.getAll();
+    }
+
+    public List<Item> getAllOrderedItems() {
+        return orderedItemsRepository.getAll();
     }
 }
