@@ -5,8 +5,11 @@ import entity.Item;
 import entity.Order;
 import service.ItemService;
 import service.OrderService;
+import utils.Constant;
 import utils.ItemSorter;
+import utils.ReportSaver;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +69,17 @@ public class ItemReportService {
         return ItemSorter.getItemsSortedByNumberOfSales(items).subList(0, 3);
     }
 
-    public boolean saveBestSellersToFile() {
+    //    save best selling items to file
+    public boolean saveBestSellersToFile() throws IOException {
         List<Item> items = itemService.getBestSellers();
+        ReportSaver.save(items, Constant.BEST_SELLERS_REPORT);
         return true;
     }
 
-    public boolean saveCandidatesToRemoveToFile() {
+    //    save items which are candidates to remove from store inventory due to poor sales level
+    public boolean saveCandidatesToRemoveToFile() throws IOException {
         List<Item> items = itemService.getCandidatesToRemove();
+        ReportSaver.save(items, Constant.CANDIDATES_TO_REMOVE);
         return true;
     }
 }
