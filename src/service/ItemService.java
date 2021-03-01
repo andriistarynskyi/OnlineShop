@@ -2,6 +2,7 @@ package service;
 
 import entity.Item;
 import repository.ItemRepository;
+import utils.Constant;
 import utils.DateParser;
 import utils.FileReader;
 
@@ -14,7 +15,7 @@ public class ItemService {
     ItemRepository itemRepository = new ItemRepository();
 
     public List<Item> parseItemsFromFile() {
-        String itemsFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\items.dat";
+        String itemsFilePath = Constant.ITEMS_FILE_PATH;
         List<Item> itemsList = new ArrayList<>();
         List<String> itemsDataList = FileReader.read(itemsFilePath);
 
@@ -23,7 +24,7 @@ public class ItemService {
             String title = tempArray[1];
             int code = Integer.parseInt(tempArray[2]);
             String producer = tempArray[3];
-            LocalDate dateOfLastUpdate = DateParser.parse(tempArray[4], "dd.MM.yyyy H:mm:ss");
+            LocalDate dateOfLastUpdate = DateParser.parse(tempArray[4], Constant.DATE_OF_LAST_UPDATE_PATTERN);
 
             itemsList.add(new Item(title, code, producer, dateOfLastUpdate));
         }

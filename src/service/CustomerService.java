@@ -3,6 +3,7 @@ package service;
 import entity.Customer;
 import entity.Gender;
 import repository.CustomerRepository;
+import utils.Constant;
 import utils.DateParser;
 import utils.FileReader;
 
@@ -15,7 +16,7 @@ public class CustomerService {
     CustomerRepository customerRepository = new CustomerRepository();
 
     public List<Customer> parseCustomersFromFile() {
-        String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
+        String customersFilePath = Constant.CUSTOMERS_FILE_PATH;
         List<Customer> customersList = new ArrayList<>();
         List<String> customersDataList = FileReader.read(customersFilePath);
 
@@ -23,7 +24,7 @@ public class CustomerService {
             String[] tempArray = str.split(";");
 
             String customerName = tempArray[0];
-            LocalDate dateOfBirth = DateParser.parse(tempArray[1], "d MMMM yyyy");
+            LocalDate dateOfBirth = DateParser.parse(tempArray[1], Constant.DOB_PATTERN);
             String address = tempArray[2];
             Gender gender = getGender(tempArray[3]);
             String phoneNumber = getPhoneNumber(tempArray[4]);

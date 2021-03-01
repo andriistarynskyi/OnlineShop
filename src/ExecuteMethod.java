@@ -1,7 +1,6 @@
 import service.FileReaderService;
 import service.report.ItemReportService;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class ExecuteMethod {
@@ -9,7 +8,7 @@ public class ExecuteMethod {
     FileReaderService fileReader = new FileReaderService();
     ItemReportService itemReportService = new ItemReportService();
 
-    public void createReport() throws IOException {
+    public void createReport() {
 //        Read data from files and persist all the data into 4 tables
 //        (customers, items, orders, orderedItems?)
         fileReader.saveDataFromFiles();
@@ -22,12 +21,13 @@ public class ExecuteMethod {
 
         System.out.println("-----------------------");
 
-//        get 3 least popular items in the store
+//        get 3 best selling items in the store
         System.out.println("Best sellers in the store are:");
         itemReportService.getBestSellers().forEach(i -> System.out.println(i));
 
         System.out.println("-----------------------");
 
+//        get 3 items which are candidates to remove from the store
         System.out.println("Candidates to remove from the store are:");
         itemReportService.getCandidatesToRemove().forEach(i -> System.out.println(i));
 

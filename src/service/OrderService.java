@@ -5,6 +5,7 @@ import entity.Item;
 import entity.Order;
 import repository.OrderRepository;
 import repository.OrderedItemsRepository;
+import utils.Constant;
 import utils.DateParser;
 import utils.FileReader;
 
@@ -20,13 +21,13 @@ public class OrderService {
     ItemService itemService = new ItemService();
 
     public List<Order> parse() {
-        String customersFilePath = "C:\\Users\\astar\\IdeaProjects\\OnlineShop\\src\\customers.dat";
+        String customersFilePath = Constant.CUSTOMERS_FILE_PATH;
         List<String> orderDataList = FileReader.read(customersFilePath);
         List<Order> ordersList = new ArrayList<>();
         for (String str : orderDataList) {
             String[] tempArray = str.split(";");
             Customer customer = customerService.getByName(tempArray[0]);
-            LocalDate orderPlacementDate = DateParser.parse(tempArray[6], "M/dd/yyyy");
+            LocalDate orderPlacementDate = DateParser.parse(tempArray[6], Constant.ORDER_PLACEMENT_DATE_PATTERN);
             Order order = new Order(customer, orderPlacementDate);
 
             List<Item> items = getPurchasedItems(tempArray[5]);
