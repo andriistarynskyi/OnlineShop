@@ -65,7 +65,6 @@ public class OrderedItemsRepository {
                 Item item = itemRepository.getById(rs.getInt("item_id"));
                 items.add(item);
             }
-
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }

@@ -16,7 +16,7 @@ public class ExecuteMethod {
         System.out.println("-----------------------");
 
 //        what product is the most popular among women
-        System.out.println("The most popular item purchased by women is " +
+        System.out.println("The most popular item purchased by women are " +
                 itemReportService.getMostPopularItemAmongWomen() + ".");
 
         System.out.println("-----------------------");
