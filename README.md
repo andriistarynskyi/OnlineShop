@@ -1,6 +1,8 @@
 Online store
 There are two csv files with information from client’s CRM: items.csv and customer.csv. 
-[Online store was implemented using Hibernate]: https://github.com/andriistarynskyi/OnlineShopHibernate
+
+In this repository shown the same project was implemented using Hibernate
+https://github.com/andriistarynskyi/OnlineShopHibernate
 
 Each file contains:
 - the header with the column description 
